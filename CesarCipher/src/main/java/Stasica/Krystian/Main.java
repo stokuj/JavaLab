@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Stasica.Krystian;
 
 import java.io.FileWriter;
@@ -28,7 +25,7 @@ public class Main
         ArrayList<String> lines = new ArrayList<>();
 
         // Default and basic file data. Input, output, shift.
-        fileData data = new fileData();
+        FileData data = new FileData();
 
         //We look for expected parameters. We modify data.
         checkParameters(arguments,data);
@@ -94,16 +91,16 @@ public class Main
     /**
      * Method encodes/decodes arraylist and returnd it.
      * 
-     * @param lines - arraylist of text rows
-     * @param shift - intiger representing shift of each character.
-     * @return lines - modified arraylist
+     * @param lines arraylist of text rows
+     * @param shift intiger representing shift of each character
+     * @return l    modified arraylist is being returned
      */
-    public static ArrayList<String> encode(ArrayList<String> lines,int shift){
+    public static ArrayList<String> encode(ArrayList<String> l,int shift){
         try
         {
-            for(int i=0; i<lines.size(); i++)
+            for(int i=0; i<l.size(); i++)
             {
-                lines.set(i,cipher(lines.get(i),shift));
+                l.set(i,cipher(l.get(i),shift));
             }
         }
         catch (Exception e) 
@@ -112,15 +109,15 @@ public class Main
                 e.printStackTrace();
         }
 
-        return lines;
+        return l;
     }  
 
     /**
      * Method ciphers given string (row).
      * 
      * @param str - given string to be ciphered
-     * @param shift - intiger representing shift of each character.
-     * @return s - modified string
+     * @param shift - intiger representing shift of each character
+     * @return tmp - modified string
      */
     public static String cipher(String str, int shift){
    
@@ -166,15 +163,12 @@ public class Main
     }
     
     /**
+     * Method is looking for parameters, and midfify data object.
      *
-     * @param a
-     * @param in
-     * @param out
-     * @param isShiftReverse
-     * @param shift
-     * @param data
+     * @param a     arrayList of lines, out text to be encoded
+     * @param data  object with input, output, shift configuration
      */
-    public static void checkParameters(String[] a,fileData data )
+    public static void checkParameters(String[] a,FileData data )
     {
         //This part of codes looks for parameters
         for(int i=0; i<a.length;i++)

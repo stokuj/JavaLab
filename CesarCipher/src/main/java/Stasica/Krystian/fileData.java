@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Stasica.Krystian;
 
 /** 
@@ -9,9 +6,9 @@ package Stasica.Krystian;
  * 
  * @author Krystian Stasica
  */
-public class fileData {
+public class FileData {
     String inputFile = "infile.txt";
     String outputFile = "outfile.txt";
-    int shift = -40;
+    int shift = 3;
     boolean isShiftReverse = false;
 }
