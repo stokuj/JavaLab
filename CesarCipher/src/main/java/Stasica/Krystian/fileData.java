@@ -11,7 +11,7 @@ package Stasica.Krystian;
  */
 public class fileData {
     String inputFile = "infile.txt";
-    String outputFile = "out.txt";
+    String outputFile = "outfile.txt";
     int shift = 4;
     boolean isShiftReverse = false;
 }
