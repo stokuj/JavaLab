@@ -32,7 +32,7 @@ public class Main
 
         //We look for expected parameters. We modify data.
         checkParameters(arguments,data);
-
+           
         // Main part of the program
         readToFile(lines, data.inputFile);
         lines = encode(lines,data.shift);
@@ -200,8 +200,11 @@ public class Main
             }
         }
         
+        data.shift = 0 - data.shift; //for correctness
+        data.shift = data.shift%26;
+        
         // Do we decode? Shift to the right instead of the left.
-        if(data.isShiftReverse)// should be true when encryption//reversed encdoeing
+        if(data.isShiftReverse)// should be true when reversed
         {
             data.shift = 0 - data.shift;
         }
