@@ -1,2 +1,4 @@
-Stasica\Krystian\Main.class
-Stasica\Krystian\DivisionException.class
+pl\polsl\stasica\krystian\controller\Main.class
+pl\polsl\stasica\krystian\view\View.class
+pl\polsl\stasica\krystian\model\Model.class
+pl\polsl\stasica\krystian\controller\Controller.class

@@ -2,9 +2,17 @@
 package pl.polsl.stasica.krystian.controller;
 
 /**
- *
- * @author dv6
+ *  Main function of my program. 
+ *  Starts controller with parameters in arguments arrayList;
+ * 
+ * @author Krystian Stasica
+ * @version 0.2
  */
-public class Main {
-    
+class Main{
+    public static void main(String... arguments)
+    { 
+       Controller cont = new Controller();  
+       cont.start(arguments); 
+    } 
 }
+

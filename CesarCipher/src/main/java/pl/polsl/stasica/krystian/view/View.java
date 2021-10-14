@@ -5,8 +5,7 @@ import java.io.FileWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
-import pl.polsl.stasica.krystian.controller.*; 
-import pl.polsl.stasica.krystian.model.*; 
+
 
 /** 
  * Class holds basic information about input, output file names and shift value
@@ -15,29 +14,18 @@ import pl.polsl.stasica.krystian.model.*;
  * @author Krystian Stasica
  */
 public class View {
+
     /**
-     * String representing the input file name.
-     * Default value is set.
+     * Method prints basic information of user.
+     * 
      */
-    public  String inputFile = "infile.txt";
-    
-    /**
-     * String representing the output file name.
-     * Default value is set.
-     */
-    public  String outputFile = "outfile.txt";
-    
-    /**
-     * Intiger representing the shift position.
-     * Default value is set to 3.
-     */
-    public  int shift = 3;
-    
-    /**
-     * String representing shift in reversed order.
-     * It will probablly be removed in next version.
-     */
-    public   boolean isShiftReverse = false;
+    public void basicInfo(){
+        System.out.println("Wecome to Cesar Cipher program.");
+        System.out.println("Use -o input.txt to enter input file name.");
+        System.out.println("Use -i output.txt to enter output file name.");
+        System.out.println("Use shift and intiger to set shift position.");
+        System.out.println("For decodeing use negative shift.");
+    }
     
     /**
      * Method reads data from given file to an array list.

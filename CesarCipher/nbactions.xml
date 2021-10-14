@@ -12,8 +12,8 @@
             <properties>
                 <exec.vmArgs></exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-                <exec.appArgs></exec.appArgs>
-                <exec.mainClass>pl.polsl.stasica.krystian.controller.Controller</exec.mainClass>
+                <exec.appArgs>-i infile.txt -o outfile2.txt -s 3</exec.appArgs>
+                <exec.mainClass>pl.polsl.stasica.krystian.controller.Main</exec.mainClass>
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
@@ -29,8 +29,8 @@
             <properties>
                 <exec.vmArgs>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-                <exec.appArgs></exec.appArgs>
-                <exec.mainClass>pl.polsl.stasica.krystian.controller.Controller</exec.mainClass>
+                <exec.appArgs>-i infile.txt -o outfile2.txt -s 3</exec.appArgs>
+                <exec.mainClass>pl.polsl.stasica.krystian.controller.Main</exec.mainClass>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
             </properties>
@@ -47,9 +47,9 @@
             <properties>
                 <exec.vmArgs></exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-                <exec.mainClass>pl.polsl.stasica.krystian.controller.Controller</exec.mainClass>
+                <exec.mainClass>pl.polsl.stasica.krystian.controller.Main</exec.mainClass>
                 <exec.executable>java</exec.executable>
-                <exec.appArgs></exec.appArgs>
+                <exec.appArgs>-i infile.txt -o outfile2.txt -s 3</exec.appArgs>
             </properties>
         </action>
         <action>

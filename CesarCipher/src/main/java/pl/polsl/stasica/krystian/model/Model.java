@@ -1,10 +1,8 @@
 
 package pl.polsl.stasica.krystian.model;
 
-import pl.polsl.stasica.krystian.view.View;
 import java.util.ArrayList;
-import pl.polsl.stasica.krystian.controller.*; 
-import pl.polsl.stasica.krystian.view.*; 
+
 
 /** 
  * Class simly has methods that operate on files, perform encodeing, algorithm for cipher.
@@ -13,6 +11,61 @@ import pl.polsl.stasica.krystian.view.*;
  * @author dv6
  */
 public class Model {
+    /**
+     * String representing the input file name.
+     * Default value is set.
+     */
+    private  String inputFile = "infile.txt";
+    
+    /**
+     * String representing the output file name.
+     * Default value is set.
+     */
+    private  String outputFile = "outfile.txt";
+    
+    /**
+     * Intiger representing the shift position.
+     * Default value is set to 3.
+     */
+    private  int shift = 3;
+    
+    /**
+     * Basic Model constructor.
+     * Creates default values for model class.
+     * 
+     */
+    public Model() {
+        inputFile = "infile.txt";
+        outputFile = "outfile.txt";
+        shift = 3;
+    }
+    
+    /**
+     * Method returns private input file name from model.
+     * 
+     * @return inputFile   input file name
+     */
+    public String getInputFile() {
+        return inputFile;
+    }
+    
+    /**
+     * Method returns private output file name from model.
+     * 
+     * @return outputFile   output file name
+     */
+    public String getOutputFile() {
+        return outputFile;
+    }
+    
+    /**
+     * Method returns private shift from model.
+     * 
+     * @return shift    position of shift in encryption
+     */
+    public int getShift() {
+        return shift;
+    }
     
     /**
      * Method encodes/dencodes arraylist and return it.
@@ -94,40 +147,35 @@ public class Model {
      * @param a     arrayList of lines, out text to be encoded
      * @param data  object with input, output, shift configuration
      */
-    public static void checkParameters(String[] a,View data )
+    public  void checkParameters(String[] a,Model model )
     {
         //This part of codes looks for parameters
         for(int i=0; i<a.length;i++)
         {   
             if(a[i].equals("-i"))
             {
-                data.inputFile=a[i+1];
+                inputFile =a[i+1];
                 i++;
             }
             else if(a[i].equals("-o"))
             {
-                data.outputFile=a[i+1];
+                outputFile=a[i+1];
                 i++;
             }
             else if(a[i].equals("-s"))
             {
-                data.shift = Integer.parseInt(a[i+1]);
+                shift = Integer.parseInt(a[i+1]);
                 i++;
             }
-            else if(a[i].equals("-r"))
-            {
-                data.isShiftReverse = true;
-            }
         }
         
-        data.shift = 0 - data.shift; //for correctness
-        data.shift = data.shift%26;
+        model.shift = 0 - model.shift; //for correctness
+        model.shift = model.shift%26;
         
-        // Do we decode? Shift to the right instead of the left.
-        if(data.isShiftReverse)// should be true when reversed
-        {
-            data.shift = 0 - data.shift;
-        }
     }
+    
+    
+    
+    
 }
 

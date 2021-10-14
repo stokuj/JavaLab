@@ -2,42 +2,54 @@ package pl.polsl.stasica.krystian.controller;
 
 import pl.polsl.stasica.krystian.model.Model;
 import pl.polsl.stasica.krystian.view.View;
-import java.io.FileWriter;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
-import pl.polsl.stasica.krystian.model.*; 
-import pl.polsl.stasica.krystian.view.*; 
+
 /** 
- * Class manages Cipher operation.
+ * Class performs controlling operator over model and view classes.
  * 
  * @author Krystian Stasica
  * @version 0.2
  */
 public class Controller 
 {
+    Model graph; 
+    View view;
+    
     /**
-     * Controller method
+     * Basic Controller constructor.
+     * Creates Model and View.
      * 
-     * @param arguments program call parameters
      */
-    public static void main(String... arguments){
+    public Controller(){
+        this.graph = new Model(); 
+        this.view = new View();
+    }
+    
+    /**
+     * Method represents starting of an program.
+     * It controls most part program.
+     * Manages controller operation ofr view and model.
+     * 
+     */
+     public void start(String... arguments){
+        // Default and basic file data. Input, output, shift.
+        View view = new View();
+        Model model = new Model();
+        
+        // This part will print basic program informa
+        view.basicInfo();
         
         // Each element is string representing text line.
         ArrayList<String> lines = new ArrayList<>();
 
-        // Default and basic file data. Input, output, shift.
-        View dataView = new View();
-        Model model = new Model();
-
         //We look for expected parameters. We modify data.
-        model.checkParameters(arguments,dataView);
+        model.checkParameters(arguments,model);
            
         // Main part of the program
-        dataView.readToFile(lines, dataView.inputFile);
-        lines = model.encode(lines,dataView.shift);
-        dataView.loadToFile(lines, dataView.outputFile);
-      }
+        view.readToFile(lines, model.getInputFile());
+        lines = model.encode(lines,model.getShift());
+        view.loadToFile(lines, model.getOutputFile());
+    }
 } 
 
 
