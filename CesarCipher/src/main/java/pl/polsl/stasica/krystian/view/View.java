@@ -12,6 +12,7 @@ import java.util.Scanner;
  * Default values are allready set.
  * 
  * @author Krystian Stasica
+ * @version 0.2
  */
 public class View {
 

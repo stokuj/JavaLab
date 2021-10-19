@@ -6,9 +6,10 @@ import java.util.ArrayList;
 
 /** 
  * Class simly has methods that operate on files, perform encodeing, algorithm for cipher.
- * 
  * Default values are allready set.
- * @author dv6
+ * 
+ * @author Krystian Stasica
+ * @version 0.2
  */
 public class Model {
     /**
@@ -70,7 +71,7 @@ public class Model {
     /**
      * Method encodes/dencodes arraylist and return it.
      * 
-     * @param lines arraylist of text rows
+     * @param l arraylist of text rows
      * @param shift intiger representing shift of each character
      * @return l    modified arraylist is being returned
      */
@@ -145,7 +146,7 @@ public class Model {
      * Method is looking for parameters, and midfify data object.
      *
      * @param a     arrayList of lines, out text to be encoded
-     * @param data  object with input, output, shift configuration
+     * @param model  object with input, output, shift configuration
      */
     public  void checkParameters(String[] a,Model model )
     {

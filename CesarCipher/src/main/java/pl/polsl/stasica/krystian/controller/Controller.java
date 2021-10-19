@@ -30,6 +30,7 @@ public class Controller
      * It controls most part program.
      * Manages controller operation ofr view and model.
      * 
+     * @param arguments loads UI parameters into arrayList
      */
      public void start(String... arguments){
         // Default and basic file data. Input, output, shift.
