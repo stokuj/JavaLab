@@ -2,7 +2,7 @@
 package pl.polsl.stasica.krystian.model;
 
 import java.util.ArrayList;
-
+import pl.polsl.stasica.krystian.view.View;
 
 /** 
  * Class simly has methods that operate on files, perform encodeing, algorithm for cipher.
@@ -75,12 +75,12 @@ public class Model {
      * @param shift intiger representing shift of each character
      * @return l    modified arraylist is being returned
      */
-    public static ArrayList<String> encode(ArrayList<String> l,int shift){
+    public ArrayList<String> encode(ArrayList<String> l,int shift){
         try
         {
             for(int i=0; i<l.size(); i++)
             {
-                l.set(i,cipher(l.get(i),shift));
+                l.set(i, cipher(l.get(i),shift) );
             }
         }
         catch (Exception e) 
@@ -99,7 +99,7 @@ public class Model {
      * @param shift - intiger representing shift of each character
      * @return tmp - modified string
      */
-    public static String cipher(String str, int shift){
+    public String cipher(String str, int shift){
    
         String tmp = "";
              
@@ -174,9 +174,12 @@ public class Model {
         model.shift = model.shift%26;
         
     }
-    
-    
-    
-    
+ 
+    public void takeDataFromUser(Model model, View view)
+    {
+        model.inputFile     = view.askForInput();
+        model.outputFile    = view.askForOutput();
+        model.shift         = view.askForShift();
+    }
 }
 

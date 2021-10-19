@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
+import pl.polsl.stasica.krystian.model.MyException;
+
 /** 
  * Class holds basic information about input, output file names and shift value
  * Default values are allready set.
@@ -24,10 +26,66 @@ public class View {
         System.out.println("Wecome to Cesar Cipher program.");
         System.out.println("Use -o input.txt to enter input file name.");
         System.out.println("Use -i output.txt to enter output file name.");
-        System.out.println("Use shift and intiger to set shift position.");
+        System.out.println("Use -s and intiger to set shift position.");
         System.out.println("For decodeing use negative shift.");
     }
+
+    public String askForInput()
+    {
+        try
+        {
+            System.out.println("Please enter your input file in txt format.");
+            Scanner sc=new Scanner(System.in);
+            
+            if(!sc.hasNextLine())
+                throw new MyException("test");
+            else if(sc == null)
+                throw new MyException("null");
+
+            return sc.nextLine();
+        }
+        catch (MyException ex)
+        {
+            System.out.println("Caught");
+  
+            // Print the message from MyException object
+            System.out.println(ex.getMessage());
+        }
+
+        return "infile.txt";
+    }
     
+    public String askForOutput()
+    {
+        System.out.println("Please enter your output file in txt format.");
+        Scanner sc=new Scanner(System.in); 
+        return sc.nextLine();
+    }
+    
+    public int askForShift()
+    {   
+        int tmp=0;
+        try{
+            System.out.println("Please enter your shift intiger.");
+            Scanner sc=new Scanner(System.in);
+            if(sc.hasNextInt())
+                tmp=sc.nextInt();
+            else
+                throw new MyException("test");
+
+        }
+        catch (MyException ex)
+        {
+            System.out.println("Shift is in incrorrect format");
+  
+            // Print the message from MyException object
+            System.out.println(ex.getMessage());
+        }
+
+        return tmp;
+    }
+    
+        
     /**
      * Method reads data from given file to an array list.
      * 
@@ -79,4 +137,5 @@ public class View {
                 e.printStackTrace();
         }
       }
+    
 }

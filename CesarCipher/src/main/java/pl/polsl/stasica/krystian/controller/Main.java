@@ -12,8 +12,8 @@ package pl.polsl.stasica.krystian.controller;
 class Main{
     public static void main(String... arguments)
     { 
-       Controller cont = new Controller();  
-       cont.start(arguments); 
+       Controller cObj = new Controller();  
+       cObj.start(arguments); 
     } 
 }
 

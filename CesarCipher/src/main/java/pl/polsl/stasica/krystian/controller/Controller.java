@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class Controller 
 {
-    Model graph; 
-    View view;
+    Model modelObj; 
+    View viewObj;
     
     /**
      * Basic Controller constructor.
@@ -21,8 +21,8 @@ public class Controller
      * 
      */
     public Controller(){
-        this.graph = new Model(); 
-        this.view = new View();
+        this.modelObj = new Model(); 
+        this.viewObj = new View();
     }
     
     /**
@@ -33,23 +33,24 @@ public class Controller
      * @param arguments loads UI parameters into arrayList
      */
      public void start(String... arguments){
-        // Default and basic file data. Input, output, shift.
-        View view = new View();
-        Model model = new Model();
         
-        // This part will print basic program informa
-        view.basicInfo();
+        // This part will print basic program information
+        viewObj.basicInfo();
         
         // Each element is string representing text line.
         ArrayList<String> lines = new ArrayList<>();
 
         //We look for expected parameters. We modify data.
-        model.checkParameters(arguments,model);
-           
-        // Main part of the program
-        view.readToFile(lines, model.getInputFile());
-        lines = model.encode(lines,model.getShift());
-        view.loadToFile(lines, model.getOutputFile());
+        // If user dint used any arguments we will ask him for data.
+        if(arguments.length == 0)
+            modelObj.takeDataFromUser(modelObj,viewObj);
+        else
+            modelObj.checkParameters(arguments,modelObj);
+
+        // Main part of the program read, encode and load.
+        viewObj.readToFile(lines, modelObj.getInputFile());
+        lines = modelObj.encode(lines,modelObj.getShift());
+        viewObj.loadToFile(lines, modelObj.getOutputFile());
     }
 } 
 
