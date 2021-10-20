@@ -2,6 +2,7 @@ package pl.polsl.stasica.krystian.controller;
 
 import pl.polsl.stasica.krystian.model.Model;
 import pl.polsl.stasica.krystian.view.View;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /** 
@@ -42,15 +43,28 @@ public class Controller
 
         //We look for expected parameters. We modify data.
         // If user dint used any arguments we will ask him for data.
+        boolean userWantsDefaultParameters = false;
+        
+        userWantsDefaultParameters = viewObj.getUserChoiceAboutParameters();
+        
         if(arguments.length == 0)
-            modelObj.takeDataFromUser(modelObj,viewObj);
+            if(userWantsDefaultParameters)
+                modelObj.useDefaultParameters(modelObj);
+            else
+                modelObj.takeDataFromUser(modelObj,viewObj);
         else
             modelObj.checkParameters(arguments,modelObj);
 
         // Main part of the program read, encode and load.
-        viewObj.readToFile(lines, modelObj.getInputFile());
-        lines = modelObj.encode(lines,modelObj.getShift());
-        viewObj.loadToFile(lines, modelObj.getOutputFile());
+        try{
+            viewObj.readToFile(lines, modelObj.getInputFile());
+            lines = modelObj.encode(lines,modelObj.getShift());
+            viewObj.loadToFile(lines, modelObj.getOutputFile());
+        }
+        catch(IOException e) {
+            
+        e.printStackTrace();
+        }
     }
 } 
 

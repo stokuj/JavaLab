@@ -83,9 +83,8 @@ public class Model {
                 l.set(i, cipher(l.get(i),shift) );
             }
         }
-        catch (Exception e) 
+        catch (UnexpectedASCIICodeException e) 
         {
-                System.out.println("An error occurred during Encoding.");
                 e.printStackTrace();
         }
 
@@ -98,8 +97,9 @@ public class Model {
      * @param str - given string to be ciphered
      * @param shift - intiger representing shift of each character
      * @return tmp - modified string
+     * @throws pl.polsl.stasica.krystian.model.UnexpectedASCIICodeException
      */
-    public String cipher(String str, int shift){
+    public String cipher(String str, int shift) throws UnexpectedASCIICodeException{
    
         String tmp = "";
              
@@ -136,8 +136,13 @@ public class Model {
                         c -= 26;
                 tmp += c;
             }
-            else
-                tmp += (char)(str.charAt(i)); 
+            else{
+                if( c >= 32 & c <=127)
+                    tmp += (char)(str.charAt(i)); 
+                else
+                    throw new UnexpectedASCIICodeException(c,(int)c);
+            }
+
         }
         return tmp;
     }
@@ -180,6 +185,13 @@ public class Model {
         model.inputFile     = view.askForInput();
         model.outputFile    = view.askForOutput();
         model.shift         = view.askForShift();
+    }
+    
+    public void useDefaultParameters(Model model)
+    {
+        inputFile = "infile.txt";
+        outputFile = "outfile.txt";
+        shift = 3;
     }
 }
 

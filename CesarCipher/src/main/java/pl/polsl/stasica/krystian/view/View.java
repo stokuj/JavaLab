@@ -2,12 +2,16 @@
 package pl.polsl.stasica.krystian.view;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
 
 
-import pl.polsl.stasica.krystian.model.MyException;
+import pl.polsl.stasica.krystian.model.ShiftNotIntException;
+import pl.polsl.stasica.krystian.model.EmptyFileNameException;
+import pl.polsl.stasica.krystian.model.FileNotFoundErrorException;
 
 /** 
  * Class holds basic information about input, output file names and shift value
@@ -23,32 +27,29 @@ public class View {
      * 
      */
     public void basicInfo(){
-        System.out.println("Wecome to Cesar Cipher program.");
+        System.out.println("Wecome to Cesar Cipher program.\n");
+
         System.out.println("Use -o input.txt to enter input file name.");
         System.out.println("Use -i output.txt to enter output file name.");
         System.out.println("Use -s and intiger to set shift position.");
         System.out.println("For decodeing use negative shift.");
+        System.out.println("-i infile.txt -o outfile.txt -s -3\n");
     }
 
     public String askForInput()
     {
-        try
-        {
-            System.out.println("Please enter your input file in txt format.");
+        try{
             Scanner sc=new Scanner(System.in);
+            System.out.println("Please enter your input file in txt format.");
+            String name = sc.nextLine();
             
-            if(!sc.hasNextLine())
-                throw new MyException("test");
-            else if(sc == null)
-                throw new MyException("null");
+            if(name.equals(""))
+                throw new EmptyFileNameException();
 
-            return sc.nextLine();
+            return name;
         }
-        catch (MyException ex)
-        {
-            System.out.println("Caught");
-  
-            // Print the message from MyException object
+        catch (EmptyFileNameException ex){
+            
             System.out.println(ex.getMessage());
         }
 
@@ -57,32 +58,43 @@ public class View {
     
     public String askForOutput()
     {
-        System.out.println("Please enter your output file in txt format.");
-        Scanner sc=new Scanner(System.in); 
-        return sc.nextLine();
+       try{
+            Scanner sc=new Scanner(System.in);
+            System.out.println("Please enter your output file in txt format.");
+            String name = sc.nextLine();
+            
+            if(name.equals(""))
+                throw new EmptyFileNameException();
+
+            return name;
+        }
+        catch (EmptyFileNameException ex){
+            
+            System.out.println(ex.getMessage());
+        }
+
+        return "outfile.txt";
     }
     
     public int askForShift()
     {   
         int tmp=0;
         try{
+            
             System.out.println("Please enter your shift intiger.");
             Scanner sc=new Scanner(System.in);
             if(sc.hasNextInt())
                 tmp=sc.nextInt();
             else
-                throw new MyException("test");
+                throw new ShiftNotIntException();
 
         }
-        catch (MyException ex)
-        {
-            System.out.println("Shift is in incrorrect format");
-  
-            // Print the message from MyException object
+        catch (ShiftNotIntException ex){
+            
             System.out.println(ex.getMessage());
         }
 
-        return tmp;
+        return 3; // 3 is default value
     }
     
         
@@ -91,51 +103,71 @@ public class View {
      * 
      * @param lines - array list of text rows
      * @param input - input file name
+     * @throws java.io.IOException
      */
-    public void readToFile(ArrayList<String> lines, String input ){
+    public void readToFile(ArrayList<String> lines, String input ) throws IOException{
+        
+        File tempFile = new File(input);
+        boolean exists = tempFile.exists();
+        
+        if(!exists)
+            throw new FileNotFoundErrorException();
+        
+        Scanner scanner = new Scanner(Paths.get(input));
 
-
-        // we create a scanner for reading the file
-        try (Scanner scanner = new Scanner(Paths.get(input))) 
+        // we read all the lines of the file
+        while (scanner.hasNextLine()) 
         {
-            // we read all the lines of the file
-            while (scanner.hasNextLine()) 
-            {
-                lines.add(scanner.nextLine());
-            }
-        } 
-        catch (Exception e) 
-        {
-            System.out.println("Error: " + e.getMessage());
+            lines.add(scanner.nextLine());
         }
-      }
+    }
+      
     
     /**
      * Method loads data to given file from array list.
      * 
      * @param lines - array list of text rows
      * @param output - output file name
+     * @throws java.io.IOException
      */
-    public void loadToFile(ArrayList<String> lines, String output){
-        try 
-        {
-        FileWriter myWriter = new FileWriter(output);
-
-            for(String str: lines) 
+    public void loadToFile(ArrayList<String> lines, String output) throws IOException{
+        
+        try (FileWriter file = new FileWriter(output)) {
+            for(String str: lines)
             {
-                myWriter.write(str + System.lineSeparator());
+                file.write(str + System.lineSeparator());
             }
-
-
-                //myWriter.write("Files in Java might be tricky, but it is fun enough!");
-                myWriter.close();
-                System.out.println("Successfully wrote to the file.");
-        } 
-        catch (Exception e) 
-        {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
         }
-      }
+        System.out.println("Successfully wrote to the file.");
+
+    }
     
+    public boolean getUserChoiceAboutParameters(){
+        
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Do you want to use default parameters?");    
+        System.out.println("Write y/yes if so, or n/no if u want to input data.");
+        
+        boolean stopLoop = false;
+        boolean userWantsDefaultParameters = false;
+        
+        while(!stopLoop)
+        {
+            String str= sc.nextLine();
+            if(str.equals("y")||str.equals("yes"))
+            {
+                userWantsDefaultParameters = true;
+                stopLoop = true;
+            }
+            else if(str.equals("n")||str.equals("no"))
+            {
+                userWantsDefaultParameters = false;
+                stopLoop = true;
+            }
+            else
+                System.out.println("Wrong choice. Select again!");
+        }
+
+        return userWantsDefaultParameters;
+    }
 }
