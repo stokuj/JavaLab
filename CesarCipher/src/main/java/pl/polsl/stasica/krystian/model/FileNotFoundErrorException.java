@@ -5,16 +5,32 @@
 package pl.polsl.stasica.krystian.model;
 
 import java.io.IOException;
+
 /**
+ * Exception class for objects thrown when given file was not found.
  *
- * @author dv6
+ * @author Krystian Stasica
+ * @version 0.2
  */
 public class FileNotFoundErrorException extends IOException {
-    
+
+    /**
+     * Non-parameter constructor
+     */
     public FileNotFoundErrorException() 
     {
         super("Program was not able to find file.\n"
         + "Please check file path.");
+    }
+    
+    /**
+     * Exception class constructor
+     *
+     * @param errorMessage  message of our error
+     */
+    public FileNotFoundErrorException(String errorMessage) 
+    {
+        super(errorMessage);
     }
 }
 

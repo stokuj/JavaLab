@@ -2,10 +2,10 @@
 package pl.polsl.stasica.krystian.model;
 
 /**
- * Exception class for objects thrown when attempting to divide by zero.
+ * Exception class for objects thrown when shift was not intiger type
  *
- * @author Gall Anonim
- * @version 1.1
+ * @author Krystian Stasica
+ * @version 0.2
  */
 public class ShiftNotIntException extends Exception {
 
@@ -21,7 +21,7 @@ public class ShiftNotIntException extends Exception {
     /**
      * Exception class constructor
      *
-     * @param errorMessage display message
+     * @param errorMessage  message of our error
      */
     public ShiftNotIntException(String errorMessage) 
     {

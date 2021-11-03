@@ -83,9 +83,9 @@ public class Model {
                 l.set(i, cipher(l.get(i),shift) );
             }
         }
-        catch (UnexpectedASCIICodeException e) 
-        {
-                e.printStackTrace();
+        catch (UnexpectedASCIICodeException e) {
+            
+            System.out.println(e.getMessage());
         }
 
         return l;
@@ -97,7 +97,7 @@ public class Model {
      * @param str - given string to be ciphered
      * @param shift - intiger representing shift of each character
      * @return tmp - modified string
-     * @throws pl.polsl.stasica.krystian.model.UnexpectedASCIICodeException
+     * @throws pl.polsl.stasica.krystian.model.UnexpectedASCIICodeException throws exception when unexpected character is being found
      */
     public String cipher(String str, int shift) throws UnexpectedASCIICodeException{
    
@@ -140,7 +140,7 @@ public class Model {
                 if( c >= 32 & c <=127)
                     tmp += (char)(str.charAt(i)); 
                 else
-                    throw new UnexpectedASCIICodeException(c,(int)c);
+                    throw new UnexpectedASCIICodeException(c,(int)c,143,"model.java");
             }
 
         }
@@ -153,25 +153,25 @@ public class Model {
      * @param a     arrayList of lines, out text to be encoded
      * @param model  object with input, output, shift configuration
      */
-    public  void checkParameters(String[] a,Model model )
-    {
+    public  void checkParameters(String[] a,Model model ){
         //This part of codes looks for parameters
         for(int i=0; i<a.length;i++)
         {   
-            if(a[i].equals("-i"))
-            {
-                inputFile =a[i+1];
-                i++;
-            }
-            else if(a[i].equals("-o"))
-            {
-                outputFile=a[i+1];
-                i++;
-            }
-            else if(a[i].equals("-s"))
-            {
-                shift = Integer.parseInt(a[i+1]);
-                i++;
+            switch (a[i]) {
+                case "-i":
+                    inputFile =a[i+1];
+                    i++;
+                    break;
+                case "-o":
+                    outputFile=a[i+1];
+                    i++;
+                    break;
+                case "-s":
+                    shift = Integer.parseInt(a[i+1]);
+                    i++;
+                    break;
+                default:
+                    break;
             }
         }
         
@@ -180,18 +180,28 @@ public class Model {
         
     }
  
-    public void takeDataFromUser(Model model, View view)
-    {
+    /**
+     * Method taked data from user (by view) and saves it to the model object
+     *
+     * @param view  view object is used for comunication with user.
+     * @param model model object holds data about input, output, shift
+     */
+    public void takeDataFromUser(Model model, View view){
         model.inputFile     = view.askForInput();
         model.outputFile    = view.askForOutput();
         model.shift         = view.askForShift();
+        model.shift = 0 -model.shift; // for corectness 
     }
     
-    public void useDefaultParameters(Model model)
-    {
+    /**
+     * Method sets default parameter-like values for input, output, shift.
+     *
+     * @param model model object holds data about input, output, shift
+     */
+    public void useDefaultParameters(Model model){
         inputFile = "infile.txt";
         outputFile = "outfile.txt";
-        shift = 3;
+        shift = -3;
     }
 }
 

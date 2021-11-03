@@ -12,7 +12,7 @@
             <properties>
                 <exec.vmArgs></exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-                <exec.appArgs></exec.appArgs>
+                <exec.appArgs>-i infile.txt -o outfile.txt -s 3</exec.appArgs>
                 <exec.mainClass>pl.polsl.stasica.krystian.controller.Main</exec.mainClass>
                 <exec.executable>java</exec.executable>
             </properties>
@@ -29,7 +29,7 @@
             <properties>
                 <exec.vmArgs>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-                <exec.appArgs></exec.appArgs>
+                <exec.appArgs>-i infile.txt -o outfile.txt -s 3</exec.appArgs>
                 <exec.mainClass>pl.polsl.stasica.krystian.controller.Main</exec.mainClass>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
@@ -49,7 +49,22 @@
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.mainClass>pl.polsl.stasica.krystian.controller.Main</exec.mainClass>
                 <exec.executable>java</exec.executable>
-                <exec.appArgs></exec.appArgs>
+                <exec.appArgs>-i infile.txt -o outfile.txt -s 3</exec.appArgs>
+            </properties>
+        </action>
+        <action>
+            <actionName>javadoc</actionName>
+            <recursive>false</recursive>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>generate-sources</goal>
+                <goal>javadoc:javadoc</goal>
+            </goals>
+            <properties>
+                <show>private</show>
+                
             </properties>
         </action>
     </actions>

@@ -13,7 +13,15 @@ import java.util.ArrayList;
  */
 public class Controller 
 {
+
+    /**
+     *  Model object representing model class.
+     */
     Model modelObj; 
+
+    /**
+     *  View object representing view class
+     */
     View viewObj;
     
     /**
@@ -35,25 +43,22 @@ public class Controller
      */
      public void start(String... arguments){
         
-        // This part will print basic program information
+        // This object will print basic program information
         viewObj.basicInfo();
         
         // Each element is string representing text line.
         ArrayList<String> lines = new ArrayList<>();
 
-        //We look for expected parameters. We modify data.
-        // If user dint used any arguments we will ask him for data.
-        boolean userWantsDefaultParameters = false;
-        
-        userWantsDefaultParameters = viewObj.getUserChoiceAboutParameters();
-        
-        if(arguments.length == 0)
-            if(userWantsDefaultParameters)
-                modelObj.useDefaultParameters(modelObj);
-            else
-                modelObj.takeDataFromUser(modelObj,viewObj);
-        else
-            modelObj.checkParameters(arguments,modelObj);
+        if(arguments.length == 0)   // if user didn't provided parameters
+        {
+            boolean userWantsDefaultParameters = viewObj.getUserChoiceAboutParameters();
+            if(userWantsDefaultParameters)  // user wants use default parameters 
+                modelObj.useDefaultParameters(modelObj);    
+            else    // user wants input filenames
+                modelObj.takeDataFromUser(modelObj,viewObj);    
+        }
+        else    // if user provided parameters    
+            modelObj.checkParameters(arguments,modelObj);   
 
         // Main part of the program read, encode and load.
         try{
@@ -63,7 +68,7 @@ public class Controller
         }
         catch(IOException e) {
             
-        e.printStackTrace();
+           System.out.println(e.getMessage());
         }
     }
 } 
