@@ -7,7 +7,7 @@ package pl.polsl.stasica.krystian.controller;
  *  Starts controller with parameters in arguments arrayList;
  * 
  * @author Krystian Stasica
- * @version 0.2
+ * @version 0.3
  */
 class Main{
     

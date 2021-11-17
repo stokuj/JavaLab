@@ -18,7 +18,7 @@ import pl.polsl.stasica.krystian.model.FileNotFoundErrorException;
  * Default values are allready set.
  * 
  * @author Krystian Stasica
- * @version 0.2
+ * @version 0.3
  */
 public class View {
 
@@ -42,72 +42,60 @@ public class View {
    /**
      * Method taked input from user and return it to controller.
      *
-     * @return given input by user or default value
+     * @return name given input by user or default value
+     * @throws pl.polsl.stasica.krystian.model.EmptyFileNameException when filename is empty
      */
-    public String askForInput(){
-        try{
-            Scanner sc=new Scanner(System.in);
-            System.out.println("Please enter your input file in txt format.");
-            String name = sc.nextLine();
-            
-            if(name.equals(""))
-                throw new EmptyFileNameException();
+    public String askForInput() throws EmptyFileNameException{
 
-            return name;
-        }
-        catch (EmptyFileNameException ex){
-            
-            System.out.println(ex.getMessage());
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Please enter your input file in txt format.");
+        String name = sc.nextLine();
+
+        if(name.equals(""))
+        {   
+            name = "infile.txt";
+            throw new EmptyFileNameException();
         }
 
-        return "infile.txt";
+        return name;
     }
     
    /**
      * Method taked output from user and return it to controller.
      *
-     * @return given output by user or default value
+     * @return name given output by user or default value
+     * @throws pl.polsl.stasica.krystian.model.EmptyFileNameException   when filename is empty
      */
-    public String askForOutput(){
-       try{
-            Scanner sc=new Scanner(System.in);
-            System.out.println("Please enter your output file in txt format.");
-            String name = sc.nextLine();
-            
-            if(name.equals(""))
-                throw new EmptyFileNameException();
+    public String askForOutput() throws EmptyFileNameException{
 
-            return name;
-        }
-        catch (EmptyFileNameException ex){
-            
-            System.out.println(ex.getMessage());
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Please enter your output file in txt format.");
+        String name = sc.nextLine();
+
+        if(name.equals(""))
+        {   
+            name = "outfile.txt";
+            throw new EmptyFileNameException();
         }
 
-        return "outfile.txt";
+        return name;
     }
     
     /**
      * Method taked shift from user and returns it to controller.
      *
-     * @return given shift by user or default value
+     * @return name given shift by user or default value
+     * @throws pl.polsl.stasica.krystian.model.ShiftNotIntException when shift is not int
      */
-    public int askForShift()  {   
+    public int askForShift() throws ShiftNotIntException  {   
         var tmp=0;
-        try{
-            
-            System.out.println("Please enter your shift intiger.");
-            Scanner sc=new Scanner(System.in);
-            if(sc.hasNextInt())
-                tmp=sc.nextInt();
-            else
-                throw new ShiftNotIntException();
 
-        }
-        catch (ShiftNotIntException ex){
-            
-            System.out.println(ex.getMessage());
-        }
+        System.out.println("Please enter your shift intiger.");
+        Scanner sc=new Scanner(System.in);
+        if(sc.hasNextInt())
+            tmp=sc.nextInt();
+        else
+            throw new ShiftNotIntException();
 
         return tmp; // 3 is default value
     }
@@ -117,9 +105,10 @@ public class View {
      * 
      * @param lines - array list of text rows
      * @param input - input file name
+     * @throws pl.polsl.stasica.krystian.model.FileNotFoundErrorException when file was not found
      * @throws java.io.IOException throws when program can't locate path to file
      */
-    public void readToFile(ArrayList<String> lines, String input ) throws IOException{
+    public void readToFile(ArrayList<String> lines, String input ) throws FileNotFoundErrorException,IOException{
         
         File tempFile = new File(input);
         boolean exists = tempFile.exists();
@@ -141,18 +130,18 @@ public class View {
      * 
      * @param lines - array list of text rows
      * @param output - output file name
+     * @throws pl.polsl.stasica.krystian.model.FileNotFoundErrorException   when filename was not found
      * @throws java.io.IOException throws when program can't locate path to file
      */
-    public void loadToFile(ArrayList<String> lines, String output) throws IOException{
+    public void loadToFile(ArrayList<String> lines, String output) throws FileNotFoundErrorException,IOException{
         
         File tempFile = new File(output);
 
 
-        try (FileWriter file = new FileWriter(output)) {
+        try (FileWriter file = new FileWriter(output)) 
+        {
             for(String str: lines)
-            {
                 file.write(str + System.lineSeparator());
-            }
         }
         boolean exists = tempFile.exists();
         if(!exists)
@@ -197,5 +186,15 @@ public class View {
         }
 
         return userWantsDefaultParameters;
+    }
+    
+    
+    /**
+     * Method is printing in view, can be used in controller.
+     * 
+     * @param ex our exception that we want pass to method
+     */
+    public void displayException(Exception ex){
+        System.out.println(ex.getMessage());
     }
 }

@@ -20,15 +20,15 @@ public class UnexpectedASCIICodeException extends Exception{
     /**
      * Exception class constructor
      *
-     * @param c charater that is invalid
-     * @param x character in asci code as intiger
-     * @param l number of code line
-     * @param s file name of error 
+     * @param ch charater that is invalid
+     * @param xcode character in asci code as intiger
+     * @param line number of code line
+     * @param str file name of error 
      */
-    public UnexpectedASCIICodeException(char c, int x,int l,String s) 
+    public UnexpectedASCIICodeException(char ch, int xcode,int line,String str) 
     {   
-        super("Unexped character was found: "+ c +" ASCII Code: "+ x
-                +"\nLine in code: "+l + "   File: " + s
+        super("Unexped character was found: "+ ch +" ASCII Code: "+ xcode
+                +"\nLine in code: "+line + "   File: " + str
                 + "\nProgram will stop en(de)coding rest of the file");
     }
 }

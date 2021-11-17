@@ -5,7 +5,7 @@ package pl.polsl.stasica.krystian.model;
  * Exception class for objects thrown when shift was not intiger type
  *
  * @author Krystian Stasica
- * @version 0.2
+ * @version 0.3
  */
 public class ShiftNotIntException extends Exception {
 

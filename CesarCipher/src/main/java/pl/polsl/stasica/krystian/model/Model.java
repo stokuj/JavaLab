@@ -2,14 +2,14 @@
 package pl.polsl.stasica.krystian.model;
 
 import java.util.ArrayList;
-import pl.polsl.stasica.krystian.view.View;
+
 
 /** 
  * Class simly has methods that operate on files, perform encodeing, algorithm for cipher.
  * Default values are allready set.
  * 
  * @author Krystian Stasica
- * @version 0.2
+ * @version 0.3
  */
 public class Model {
     /**
@@ -69,26 +69,52 @@ public class Model {
     }
     
     /**
+     * Seter for inputFile
+     * 
+     * @param str   String that will be assigned as inputFile.
+     */
+    public void setInputFile(String str) {
+        inputFile = str;
+    }
+    
+    /**
+     * Seter for outputFile
+     * 
+     * @param str   String that will be assigned as outputFile.
+     */
+    public void setOutputFile(String str) {
+        outputFile = str;
+    }
+    
+    /**
+     * Seter for shift
+     * 
+     * @param in   Int that will be assigned as shift.
+     */
+    public void setShift(int in) {
+        shift = in;
+        shift = 0 - shift; // for corectness 
+    }
+    
+    
+    /**
      * Method encodes/dencodes arraylist and return it.
      * 
-     * @param l arraylist of text rows
+     * @param list arraylist of text rows
      * @param shift intiger representing shift of each character
-     * @return l    modified arraylist is being returned
+     * @return list    modified arraylist is being returned
+     * @throws pl.polsl.stasica.krystian.model.UnexpectedASCIICodeException throws exception when unexpected character is being found
      */
-    public ArrayList<String> encode(ArrayList<String> l,int shift){
-        try
-        {
-            for(int i=0; i<l.size(); i++)
-            {
-                l.set(i, cipher(l.get(i),shift) );
-            }
-        }
-        catch (UnexpectedASCIICodeException e) {
-            
-            System.out.println(e.getMessage());
-        }
-
-        return l;
+    public ArrayList<String> encode(ArrayList<String> list,int shift) throws UnexpectedASCIICodeException{
+        
+        //for(int i=0; i<list.size(); i++)
+        //    list.set(i, cipher(list.get(i),shift) );
+       
+        list.forEach(name -> list.set(list.indexOf(name), cipher(name, shift)));
+        
+        list.forEach(name -> System.out.println(name));
+        
+        return list;
     }  
     
     /**
@@ -105,42 +131,42 @@ public class Model {
              
         for(int i = 0; i < str.length(); i++)
         {
-            char c = (char)(str.charAt(i));
+            char ch = (char)(str.charAt(i));
 
-            if( c >= 65 & c <=90  & shift > 0) // A-Z shift to left
+            if( ch >= 65 & ch <=90  & shift > 0) // A-Z shift to left
             {
-                c = (char)(c - shift);
-                    if( c < 65)
-                        c += 26;
-                tmp += c;
+                ch = (char)(ch - shift);
+                    if( ch < 65)
+                        ch += 26;
+                tmp += ch;
             }
-            else if( c >= 65 & c <=90 & shift < 0) // A-Z shift to right
+            else if( ch >= 65 & ch <=90 & shift < 0) // A-Z shift to right
             {
-              c = (char)(c - shift);
-                    if( c > 90)
-                        c -= 26;
-                tmp += c;
+              ch = (char)(ch - shift);
+                    if( ch > 90)
+                        ch -= 26;
+                tmp += ch;
             }
-            else if( c >= 97 & c <=122 & shift > 0) // A-Z shift to left
+            else if( ch >= 97 & ch <=122 & shift > 0) // A-Z shift to left
             {
-               c = (char)(c - shift);
-                    if( c < 97)
-                        c += 26;
+               ch = (char)(ch - shift);
+                    if( ch < 97)
+                        ch += 26;
 
-                tmp += c;
+                tmp += ch;
             }
-            else if( c >= 97 & c <=122 & shift < 0) // A-Z shift to right
+            else if( ch >= 97 & ch <=122 & shift < 0) // A-Z shift to right
             {
-              c = (char)(c - shift);
-                    if( c > 122)
-                        c -= 26;
-                tmp += c;
+              ch = (char)(ch - shift);
+                    if( ch > 122)
+                        ch -= 26;
+                tmp += ch;
             }
             else{
-                if( c >= 32 & c <=127)
+                if( ch >= 32 & ch <=127)
                     tmp += (char)(str.charAt(i)); 
                 else
-                    throw new UnexpectedASCIICodeException(c,(int)c,143,"model.java");
+                    throw new UnexpectedASCIICodeException(ch,(int)ch,143,"model.java");
             }
 
         }
@@ -150,24 +176,23 @@ public class Model {
     /**
      * Method is looking for parameters, and midfify data object.
      *
-     * @param a     arrayList of lines, out text to be encoded
-     * @param model  object with input, output, shift configuration
+     * @param arr     arrayList of lines, out text to be encoded
      */
-    public  void checkParameters(String[] a,Model model ){
+    public  void checkParameters(String[] arr){
         //This part of codes looks for parameters
-        for(int i=0; i<a.length;i++)
+        for(int i=0; i<arr.length;i++)
         {   
-            switch (a[i]) {
+            switch (arr[i]) {
                 case "-i":
-                    inputFile =a[i+1];
+                    inputFile =arr[i+1];
                     i++;
                     break;
                 case "-o":
-                    outputFile=a[i+1];
+                    outputFile=arr[i+1];
                     i++;
                     break;
                 case "-s":
-                    shift = Integer.parseInt(a[i+1]);
+                    shift = Integer.parseInt(arr[i+1]);
                     i++;
                     break;
                 default:
@@ -175,30 +200,16 @@ public class Model {
             }
         }
         
-        model.shift = 0 - model.shift; //for correctness
-        model.shift = model.shift%26;
+        shift = 0 - shift; //for correctness
+        shift = shift%26;
         
-    }
- 
-    /**
-     * Method taked data from user (by view) and saves it to the model object
-     *
-     * @param view  view object is used for comunication with user.
-     * @param model model object holds data about input, output, shift
-     */
-    public void takeDataFromUser(Model model, View view){
-        model.inputFile     = view.askForInput();
-        model.outputFile    = view.askForOutput();
-        model.shift         = view.askForShift();
-        model.shift = 0 -model.shift; // for corectness 
     }
     
     /**
      * Method sets default parameter-like values for input, output, shift.
      *
-     * @param model model object holds data about input, output, shift
      */
-    public void useDefaultParameters(Model model){
+    public void useDefaultParameters(){
         inputFile = "infile.txt";
         outputFile = "outfile.txt";
         shift = -3;

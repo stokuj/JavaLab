@@ -5,7 +5,7 @@ package pl.polsl.stasica.krystian.model;
  * Exception class for objects thrown when given file name is empty string "".
  *
  * @author Krystian Stasica
- * @version 0.2
+ * @version 0.3
  */
 public class EmptyFileNameException extends Exception {
 

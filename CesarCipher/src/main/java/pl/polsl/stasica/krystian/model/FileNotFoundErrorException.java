@@ -4,15 +4,14 @@
  */
 package pl.polsl.stasica.krystian.model;
 
-import java.io.IOException;
 
 /**
  * Exception class for objects thrown when given file was not found.
  *
  * @author Krystian Stasica
- * @version 0.2
+ * @version 0.3
  */
-public class FileNotFoundErrorException extends IOException {
+public class FileNotFoundErrorException extends Exception {
 
     /**
      * Non-parameter constructor
