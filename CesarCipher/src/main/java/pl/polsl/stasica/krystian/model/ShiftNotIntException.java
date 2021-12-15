@@ -1,11 +1,13 @@
 
 package pl.polsl.stasica.krystian.model;
 
+import javax.swing.JOptionPane;
+
 /**
  * Exception class for objects thrown when shift was not intiger type
  *
  * @author Krystian Stasica
- * @version 0.3
+ * @version 0.6
  */
 public class ShiftNotIntException extends Exception {
 
@@ -16,6 +18,8 @@ public class ShiftNotIntException extends Exception {
     {
         super("Given shift is not an intiger!\n"
                 + "Shift is being changed to 3.");
+        JOptionPane.showMessageDialog(null, "Given shift is not an intiger!\n"
+                + "Shift is being changed to 3.", "ERROR", JOptionPane.ERROR_MESSAGE);
     }
 
     /**

@@ -8,38 +8,77 @@ import java.util.ArrayList;
  * Class simly has methods that operate on files, perform encodeing, algorithm for cipher.
  * Default values are allready set.
  * 
- * @author Krystian Stasica
- * @version 0.3
+ * @author Krystian Stasica 
+ * @version 0.6
  */
-public class Model {
+public class Model 
+{   
+    // All testing variables are used to separate prototype of user interface from core program.
+    
+    private boolean isDecode = false;
     /**
      * String representing the input file name.
      * Default value is set.
      */
-    private  String inputFile = "infile.txt";
+    private  String inputFile;
     
     /**
      * String representing the output file name.
      * Default value is set.
      */
-    private  String outputFile = "outfile.txt";
+    private  String outputFile;
     
     /**
      * Intiger representing the shift position.
      * Default value is set to 3.
      */
-    private  int shift = 3;
+    private  int shift;
     
     /**
-     * Basic Model constructor.
-     * Creates default values for model class.
-     * 
+     * Testing shift representing the input file name.
      */
-    public Model() {
-        inputFile = "infile.txt";
-        outputFile = "outfile.txt";
-        shift = 3;
+    public String shiftTest;
+
+    /**
+     * Model constructor used to pass default values in ui
+     * 
+     * @param inputFileTest testing input variable used in ui
+     * @param outputFileTest testing output variable used in ui
+     * @param shiftTest testing shift variable used in ui
+     */
+    public Model(String inputFileTest, String outputFileTest, String shiftTest) 
+    {
+        this.inputFile = inputFileTest;
+        this.outputFile = outputFileTest;
+        this.shiftTest = shiftTest;
+        this.shift = Integer.parseInt(shiftTest);
     }
+
+ 
+    
+    /**
+     * Getter of getShiftTest
+     * 
+      @return getShiftTest   shift
+     */
+    public String getShiftTest() 
+    {
+        return shiftTest;
+    }
+    
+    /**
+     * Setter of setShiftTest
+     * 
+      @param str   shiftTest
+     */
+    public void setShiftTest(String str) 
+    {
+        this.shiftTest = str;
+        this.shift = Integer.parseInt(shiftTest); 
+    }
+////////////////////////////////////////////////////////////////////////////////   
+
+
     
     /**
      * Method returns private input file name from model.
@@ -110,8 +149,16 @@ public class Model {
         //for(int i=0; i<list.size(); i++)
         //    list.set(i, cipher(list.get(i),shift) );
        
-        list.forEach(name -> list.set(list.indexOf(name), cipher(name, shift)));
+        //list.forEach(name -> list.set(list.indexOf(name), cipher(name, shift)));
         
+        
+        // for-each loop 
+        for(String str: list)
+        {
+            list.set(list.indexOf(str), cipher(str, shift));
+        }
+        
+        // for-each loop for printing encoded text
         list.forEach(name -> System.out.println(name));
         
         return list;
@@ -128,7 +175,9 @@ public class Model {
     public String cipher(String str, int shift) throws UnexpectedASCIICodeException{
    
         String tmp = "";
-             
+        if(str.isEmpty())
+            return tmp;
+                
         for(int i = 0; i < str.length(); i++)
         {
             char ch = (char)(str.charAt(i));
@@ -172,47 +221,4 @@ public class Model {
         }
         return tmp;
     }
-    
-    /**
-     * Method is looking for parameters, and midfify data object.
-     *
-     * @param arr     arrayList of lines, out text to be encoded
-     */
-    public  void checkParameters(String[] arr){
-        //This part of codes looks for parameters
-        for(int i=0; i<arr.length;i++)
-        {   
-            switch (arr[i]) {
-                case "-i":
-                    inputFile =arr[i+1];
-                    i++;
-                    break;
-                case "-o":
-                    outputFile=arr[i+1];
-                    i++;
-                    break;
-                case "-s":
-                    shift = Integer.parseInt(arr[i+1]);
-                    i++;
-                    break;
-                default:
-                    break;
-            }
-        }
-        
-        shift = 0 - shift; //for correctness
-        shift = shift%26;
-        
-    }
-    
-    /**
-     * Method sets default parameter-like values for input, output, shift.
-     *
-     */
-    public void useDefaultParameters(){
-        inputFile = "infile.txt";
-        outputFile = "outfile.txt";
-        shift = -3;
-    }
 }
-

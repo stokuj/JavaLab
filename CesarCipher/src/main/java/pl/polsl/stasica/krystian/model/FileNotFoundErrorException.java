@@ -1,15 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package pl.polsl.stasica.krystian.model;
+
+import javax.swing.JOptionPane;
 
 
 /**
  * Exception class for objects thrown when given file was not found.
  *
  * @author Krystian Stasica
- * @version 0.3
+ * @version 0.6
  */
 public class FileNotFoundErrorException extends Exception {
 
@@ -20,6 +19,8 @@ public class FileNotFoundErrorException extends Exception {
     {
         super("Program was not able to find file.\n"
         + "Please check file path.");
+        JOptionPane.showMessageDialog(null, "Program was not able to find file.\n"
+        + "Please check file path.", "ERROR", JOptionPane.ERROR_MESSAGE);
     }
     
     /**

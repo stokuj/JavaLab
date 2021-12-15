@@ -1,11 +1,13 @@
 
 package pl.polsl.stasica.krystian.model;
 
+import javax.swing.JOptionPane;
+
 /**
  * Exception class for objects thrown when unexpected char was found.
  *
  * @author Krystian Stasica
- * @version 0.2
+ * @version 0.6
  */
 public class UnexpectedASCIICodeException extends Exception{
 
@@ -15,6 +17,7 @@ public class UnexpectedASCIICodeException extends Exception{
     public UnexpectedASCIICodeException() 
     {
         super("Unexped character was found");
+        JOptionPane.showMessageDialog(null, "Unexped character was found", "ERROR", JOptionPane.ERROR_MESSAGE);
     }
     
     /**
@@ -30,5 +33,8 @@ public class UnexpectedASCIICodeException extends Exception{
         super("Unexped character was found: "+ ch +" ASCII Code: "+ xcode
                 +"\nLine in code: "+line + "   File: " + str
                 + "\nProgram will stop en(de)coding rest of the file");
+        JOptionPane.showMessageDialog(null, "Unexped character was found: "+ ch +" ASCII Code: "+ xcode
+                +"\nLine in code: "+line + "   File: " + str
+                + "\nProgram will stop en(de)coding rest of the file", "ERROR", JOptionPane.ERROR_MESSAGE);
     }
 }
